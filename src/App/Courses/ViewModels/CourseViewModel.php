@@ -7,7 +7,7 @@ use Spatie\ViewModels\ViewModel;
 
 class CourseViewModel extends ViewModel
 {
-    public Course $course;
+    public ?Course $course;
 
     public function __construct(?Course $course = null)
     {
@@ -17,5 +17,10 @@ class CourseViewModel extends ViewModel
     public function course(): Course
     {
         return $this->course ?? new Course();
+    }
+
+    public function isEditing()
+    {
+        return $this->course()->id != null;
     }
 }

@@ -8,11 +8,5 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class CourseData extends DataTransferObject
 {
-    public ?string $id;
-
     public string $name;
-
-    public Carbon $published_at;
-
-    public CourseState $state;
 }

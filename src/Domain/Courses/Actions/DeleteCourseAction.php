@@ -5,7 +5,7 @@ namespace Domain\Courses\Actions;
 use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 
-class CreateCourseAction
+class DeleteCourseAction
 {
     /**
      * Create a new action instance.
@@ -22,10 +22,8 @@ class CreateCourseAction
      *
      * @return mixed
      */
-    public function execute(CourseData $data): Course
+    public function execute(Course $course): void
     {
-        $course = Course::create($data->toArray());
-
-        return $course;
+        $course->delete();
     }
 }

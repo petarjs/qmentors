@@ -17,8 +17,10 @@ class CreateCoursesTable extends Migration
             $table->uuid('id');
             $table->string('state');
             $table->string('name');
-            $table->timestamp('published_at');
+            $table->string('slug');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

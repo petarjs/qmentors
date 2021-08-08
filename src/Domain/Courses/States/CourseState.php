@@ -1,5 +1,7 @@
 <?php
 
+namespace Domain\Courses\States;
+
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
 

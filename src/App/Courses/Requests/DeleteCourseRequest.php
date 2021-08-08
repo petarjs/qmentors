@@ -4,7 +4,7 @@ namespace App\Courses\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCourseRequest extends FormRequest
+class DeleteCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,11 +13,7 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize()
     {
-        if ($this->course) {
-            return $this->user()->can('edit courses');
-        } else {
-            return $this->user()->can('create courses');
-        }
+        return $this->user()->can('delete courses');
     }
 
     /**
@@ -28,7 +24,6 @@ class StoreCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
         ];
     }
 }

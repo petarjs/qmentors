@@ -30,9 +30,10 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'remove mentees from courses']);
         Permission::create(['name' => 'enroll classes in courses']);
 
-        Permission::create(['name' => 'create course template']);
-        Permission::create(['name' => 'edit course template']);
-        Permission::create(['name' => 'delete course template']);
+        Permission::create(['name' => 'create courses']);
+        Permission::create(['name' => 'edit courses']);
+        Permission::create(['name' => 'delete courses']);
+        Permission::create(['name' => 'publish courses']);
 
         Permission::create(['name' => 'review solutions']);
         Permission::create(['name' => 'add notes to solutions']);
@@ -40,7 +41,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Permission::create(['name' => 'submit solutions']);
 
-        Permission::create(['name' => 'manage course announcements']);
+        Permission::create(['name' => 'manage courses announcements']);
         Permission::create(['name' => 'manage global announcements']);
 
         Role::create(['name' => 'admin'])
@@ -54,6 +55,10 @@ class RolesAndPermissionsSeeder extends Seeder
             ->givePermissionTo([
                 'invite mentors',
                 'invite mentees',
+                'create courses',
+                'edit courses',
+                'delete courses',
+                'publish courses',
                 'assign courses to mentors',
                 'remove mentors from courses',
                 'assign mentees to mentors',
@@ -61,13 +66,13 @@ class RolesAndPermissionsSeeder extends Seeder
                 'remove mentees from courses',
                 'enroll classes in courses',
                 'manage global announcements',
-                'manage course announcements',
+                'manage courses announcements',
             ]);
 
         Role::create(['name' => 'mentor'])
             ->givePermissionTo([
                 'review solutions',
-                'manage course announcements',
+                'manage courses announcements',
                 'enroll mentees in courses',
             ]);
 

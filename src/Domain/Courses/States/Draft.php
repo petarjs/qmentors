@@ -1,8 +1,10 @@
 <?php
 
+namespace Domain\Courses\States;
+
 class Draft extends CourseState
 {
-    public static $name = 'draft';
+    public static string $name = 'draft';
 
     public function active(): bool
     {

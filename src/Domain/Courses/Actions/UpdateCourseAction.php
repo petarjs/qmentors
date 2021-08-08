@@ -5,7 +5,7 @@ namespace Domain\Courses\Actions;
 use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 
-class CreateCourseAction
+class UpdateCourseAction
 {
     /**
      * Create a new action instance.
@@ -22,9 +22,9 @@ class CreateCourseAction
      *
      * @return mixed
      */
-    public function execute(CourseData $data): Course
+    public function execute(Course $course, CourseData $data): Course
     {
-        $course = Course::create($data->toArray());
+        $course->update($data->all());
 
         return $course;
     }

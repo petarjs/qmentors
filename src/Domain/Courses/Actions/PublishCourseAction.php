@@ -3,7 +3,8 @@
 namespace Domain\Courses\Actions;
 
 use Domain\Courses\DataTransferObjects\CourseData;
-use Published;
+use Domain\Courses\Models\Course;
+use Domain\Courses\States\Published;
 
 class PublishCourseAction
 {
@@ -22,10 +23,11 @@ class PublishCourseAction
      *
      * @return mixed
      */
-    public function execute(CourseData $data): CourseData
+    public function execute(Course $course): Course
     {
-        $data->state->transitionTo(Published::class);
+        $course->state->transitionTo(Published::class);
+        $course->update(['published_at' => now()]);
 
-        return $data;
+        return $course;
     }
 }
