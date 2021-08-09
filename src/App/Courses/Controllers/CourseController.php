@@ -15,6 +15,7 @@ use Domain\Courses\Actions\UpdateCourseAction;
 use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 use Illuminate\Http\Request;
+use Support\Services\TrixService;
 
 class CourseController
 {
@@ -34,18 +35,20 @@ class CourseController
     }
 
 
-    public function update(StoreCourseRequest $request, Course $course, UpdateCourseAction $updateCourseAction)
+    public function update(StoreCourseRequest $request, Course $course, UpdateCourseAction $updateCourseAction, TrixService $trixService)
     {
-        $data = new CourseData($request->validated());
+        $requestData = $trixService->transformTrixDataFromRequest($request->validated(), 'course');
+        $data = new CourseData($requestData);
 
         $updateCourseAction->execute($course, $data);
 
         return redirect(route('courses.index'));
     }
 
-    public function store(StoreCourseRequest $request, CreateCourseAction $createCourseAction)
+    public function store(StoreCourseRequest $request, CreateCourseAction $createCourseAction, TrixService $trixService)
     {
-        $data = new CourseData($request->validated());
+        $requestData = $trixService->transformTrixDataFromRequest($request->validated(), 'course');
+        $data = new CourseData($requestData);
 
         $course = $createCourseAction->execute($data);
 

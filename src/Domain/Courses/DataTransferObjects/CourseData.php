@@ -12,4 +12,6 @@ class CourseData extends DataTransferObject
     public string $difficulty;
 
     public string $category;
+
+    public array $trixFields;
 }

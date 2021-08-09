@@ -37,6 +37,7 @@ class StoreCourseRequest extends FormRequest
             'name' => 'required',
             'category' => new EnumRule(CategoryEnum::class),
             'difficulty' => new EnumRule(DifficultyEnum::class),
+            'course-trixFields' => 'required',
         ];
     }
 
