@@ -10,4 +10,9 @@ class Published extends CourseState
     {
         return true;
     }
+
+    public function color(): string
+    {
+        return 'green';
+    }
 }

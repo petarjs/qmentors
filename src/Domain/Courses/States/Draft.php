@@ -10,4 +10,9 @@ class Draft extends CourseState
     {
         return false;
     }
+
+    public function color(): string
+    {
+        return 'gray';
+    }
 }

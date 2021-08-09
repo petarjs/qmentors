@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('courses/new', [CourseController::class, 'create'])->name('courses.create');
     Route::get('courses/{course}', [CourseController::class, 'edit'])->name('courses.edit')
-        ->middleware('can:edit posts');
+        ->middleware('can:edit courses');
     Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
     Route::post('courses/{course}', [CourseController::class, 'update'])->name('courses.update');
     Route::post('courses/{course}/publish', [CourseController::class, 'publish'])->name('courses.publish');

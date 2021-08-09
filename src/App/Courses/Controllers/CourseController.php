@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class CourseController
 {
-    public function index(CourseIndexQuery $query)
+    public function index(Request $request, CourseIndexQuery $query)
     {
         return (new CourseIndexViewModel($query))->view('courses.index');
     }
@@ -47,9 +47,9 @@ class CourseController
     {
         $data = new CourseData($request->validated());
 
-        $createCourseAction->execute($data);
+        $course = $createCourseAction->execute($data);
 
-        return redirect(route('courses.index'));
+        return redirect(route('courses.edit', $course));
     }
 
     public function publish(PublishCourseRequest $request, Course $course, PublishCourseAction $publishCourseAction)

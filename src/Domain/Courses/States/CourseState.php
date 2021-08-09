@@ -7,8 +7,6 @@ use Spatie\ModelStates\StateConfig;
 
 abstract class CourseState extends State
 {
-    abstract public function active(): bool;
-
     public static function config(): StateConfig
     {
         return parent::config()
@@ -18,4 +16,8 @@ abstract class CourseState extends State
             ->allowTransition(Draft::class, Archived::class)
             ->allowTransition(Published::class, Archived::class);
     }
+
+    abstract public function active(): bool;
+
+    abstract public function color(): string;
 }

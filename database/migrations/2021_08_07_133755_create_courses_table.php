@@ -18,6 +18,8 @@ class CreateCoursesTable extends Migration
             $table->string('state');
             $table->string('name');
             $table->string('slug');
+            $table->string('difficulty');
+            $table->string('category');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

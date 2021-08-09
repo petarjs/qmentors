@@ -2,10 +2,16 @@
 
 namespace App\Courses\Requests;
 
+use Domain\Courses\Enums\CategoryEnum;
+use Domain\Courses\Enums\DifficultyEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
+use Spatie\Enum\Laravel\Rules\EnumRule;
 
 class StoreCourseRequest extends FormRequest
 {
+    use TransformsEnums;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,6 +35,16 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'category' => new EnumRule(CategoryEnum::class),
+            'difficulty' => new EnumRule(DifficultyEnum::class),
+        ];
+    }
+
+    public function enums(): array
+    {
+        return [
+            'category' => CategoryEnum::class,
+            'difficulty' => DifficultyEnum::class,
         ];
     }
 }

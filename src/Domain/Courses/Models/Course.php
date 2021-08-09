@@ -2,6 +2,8 @@
 
 namespace Domain\Courses\Models;
 
+use Domain\Courses\Enums\CategoryEnum;
+use Domain\Courses\Enums\DifficultyEnum;
 use Domain\Courses\States\CourseState;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +17,8 @@ class Course extends Model
 
     protected $casts = [
         'state' => CourseState::class,
+        'difficulty' => DifficultyEnum::class,
+        'category' => CategoryEnum::class,
     ];
 
     public function getSlugOptions(): SlugOptions
