@@ -62,7 +62,7 @@ class CourseController
 
         $this->updateCourseAction->execute($course, $data);
 
-        return redirect(route('courses.index'));
+        return redirect(route('courses.edit', $course));
     }
 
     public function store(StoreCourseRequest $request)

@@ -8,6 +8,8 @@ use Domain\Courses\Enums\DifficultyEnum;
 use Domain\Courses\States\CourseState;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\ModelStates\HasStates;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -17,6 +19,7 @@ use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
 class Course extends Model
 {
     use HasStates, HasSlug, SoftDeletes, HasTrixRichText, TrixRenderTrait;
+    use LogsActivity;
 
     protected $casts = [
         'state' => CourseState::class,
@@ -34,6 +37,11 @@ class Course extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logAll();
     }
 
     public function assignments()

@@ -4,6 +4,8 @@ namespace Domain\Assignments\Models;
 
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\ModelStates\HasStates;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -13,6 +15,7 @@ use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
 class Assignment extends Model
 {
     use HasStates, HasSlug, SoftDeletes, HasTrixRichText, TrixRenderTrait;
+    use LogsActivity;
 
     public function getSlugOptions(): SlugOptions
     {
@@ -24,6 +27,11 @@ class Assignment extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logAll();
     }
 
     public function course()
