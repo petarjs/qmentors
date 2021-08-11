@@ -37,6 +37,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <x-pagination :pagination="$mentors"/>
                 @endempty
             </div>
         </div>

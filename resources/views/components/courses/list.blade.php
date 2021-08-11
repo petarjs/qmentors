@@ -7,7 +7,7 @@
                 <x-courses.list-item :course="$course"/>
             </li>
         @empty
-            <li>
+            <li class="py-4">
                 <x-empty-state>
                     <x-slot name="title">No courses</x-slot>
                     <x-slot name="message">There are no courses yet</x-slot>
@@ -20,4 +20,7 @@
             </li>
         @endforelse
     </ul>
+    @if(!$courses->isEmpty())
+        <x-pagination :pagination="$courses"/>
+    @endif
 </div>
