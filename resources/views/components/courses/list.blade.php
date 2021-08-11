@@ -1,6 +1,6 @@
 @props(['courses'])
 
-<div class="bg-white shadow overflow-hidden sm:rounded-md">
+<div class="bg-white overflow-hidden">
     <ul class="divide-y divide-gray-200">
         @forelse($courses as $course)
             <li>

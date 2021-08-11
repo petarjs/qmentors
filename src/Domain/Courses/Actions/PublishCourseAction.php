@@ -2,7 +2,6 @@
 
 namespace Domain\Courses\Actions;
 
-use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 use Domain\Courses\States\Published;
 

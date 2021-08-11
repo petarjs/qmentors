@@ -2,6 +2,7 @@
 
 namespace Domain\Courses\Models;
 
+use Domain\Assignments\Models\Assignment;
 use Domain\Courses\Enums\CategoryEnum;
 use Domain\Courses\Enums\DifficultyEnum;
 use Domain\Courses\States\CourseState;
@@ -33,5 +34,10 @@ class Course extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
     }
 }

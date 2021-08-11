@@ -75,7 +75,7 @@
 
                                     @trix($course, 'content')
 
-                                    <div class="text-right">
+                                    <div class="text-right mt-6">
                                         <x-button icon="check">
                                             Save
                                         </x-button>
@@ -86,65 +86,52 @@
                     </main>
 
                     <!-- Secondary column (hidden on smaller screens) -->
-                    <aside class="hidden w-96 bg-white border-l border-gray-200 overflow-y-auto lg:block">
-                        <ul class="divide-y divide-gray-200">
-                            <li class="relative bg-white py-5 px-4 hover:bg-gray-50">
-                                <div class="flex justify-between space-x-3">
-                                    <x-hero-icon type="check" class="w-10 h-10"/>
-                                    <div class="min-w-0 flex-1">
-                                        <a href="#" class="block focus:outline-none">
-                                            <span class="absolute inset-0" aria-hidden="true"></span>
-                                            <p class="text-sm font-medium text-gray-900 truncate">
-                                                Course Details
-                                            </p>
-                                            <p class="text-sm text-gray-500 truncate">Manage course details</p>
-                                        </a>
+                    @if($isEditing)
+                        <aside class="hidden w-96 bg-white border-l border-gray-200 overflow-y-auto lg:block">
+                            <ul class="divide-y divide-gray-200 border-b border-gray-200">
+                                <li class="relative bg-white py-5 px-4 select-none">
+                                    <div class="flex justify-between space-x-3">
+                                        <div class="min-w-0 flex-1">
+                                            <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center justify-between space-x-3"
+                                                id="projects-headline">
+                                                Assignments
+                                                <a href="{{route('assignments.create', $course)}}"
+                                                   class="inline-flex items-center p-1.5 border border-transparent rounded-md shadow-sm text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
+                                                    <x-hero-icon type="plus" class="h-3 w-3"/>
+                                                    Add Assignment
+                                                </a>
+                                            </h3>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                            <li class="relative py-5 px-4 bg-gray-50">
-                                <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center justify-between space-x-3"
-                                    id="projects-headline">
-                                    Assignments
-                                    <button type="button"
-                                            class="inline-flex items-center p-1.5 border border-transparent rounded-md shadow-sm text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">
-                                        <x-hero-icon type="plus" class="h-3 w-3"/>
-                                        Add Assignment
-                                    </button>
-                                </h3>
-                                <div class="mt-1 space-y-1" aria-labelledby="projects-headline">
-                                    <a href="#"
-                                       class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-        <span class="truncate">
-          1. Website redesign
-        </span>
-                                    </a>
-
-                                    <a href="#"
-                                       class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-        <span class="truncate">
-          2. GraphQL API
-        </span>
-                                    </a>
-
-                                    <a href="#"
-                                       class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-        <span class="truncate">
-          3. Customer migration guides
-        </span>
-                                    </a>
-
-                                    <a href="#"
-                                       class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-        <span class="truncate">
-          4. Profit sharing program
-        </span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </aside>
+                                @forelse($course->assignments as $assignment)
+                                    <li class="relative py-2 px-4 bg-gray-50">
+                                        <a href="{{route('assignments.edit', compact('course', 'assignment'))}}"
+                                           class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            <span class="truncate">
+                                                {{$assignment->order}}.
+                                                {{$assignment->name}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li>
+                                        <x-empty-state>
+                                            <x-slot name="title">No assignments yet</x-slot>
+                                            <x-slot name="message">Create an assignment to get started</x-slot>
+                                            <x-slot name="button">
+                                                <x-button as="a" :href="route('assignments.create', $course)"
+                                                          icon="plus">
+                                                    New Assignment
+                                                </x-button>
+                                            </x-slot>
+                                        </x-empty-state>
+                                    </li>
+                                @endforelse
+                            </ul>
+                        </aside>
+                    @endif
                 </div>
 
 

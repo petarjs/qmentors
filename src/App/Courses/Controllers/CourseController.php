@@ -15,10 +15,31 @@ use Domain\Courses\Actions\UpdateCourseAction;
 use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 use Illuminate\Http\Request;
-use Support\Services\TrixService;
+use Support\Trix\Services\TrixService;
 
 class CourseController
 {
+    private UpdateCourseAction $updateCourseAction;
+    private TrixService $trixService;
+    private CreateCourseAction $createCourseAction;
+    private PublishCourseAction $publishCourseAction;
+    private DeleteCourseAction $deleteCourseAction;
+
+    public function __construct(
+        CreateCourseAction  $createCourseAction,
+        UpdateCourseAction  $updateCourseAction,
+        PublishCourseAction $publishCourseAction,
+        DeleteCourseAction  $deleteCourseAction,
+        TrixService         $trixService
+    )
+    {
+        $this->updateCourseAction = $updateCourseAction;
+        $this->trixService = $trixService;
+        $this->createCourseAction = $createCourseAction;
+        $this->publishCourseAction = $publishCourseAction;
+        $this->deleteCourseAction = $deleteCourseAction;
+    }
+
     public function index(Request $request, CourseIndexQuery $query)
     {
         return (new CourseIndexViewModel($query))->view('courses.index');
@@ -34,37 +55,36 @@ class CourseController
         return (new CourseViewModel($course))->view('courses.edit');
     }
 
-
-    public function update(StoreCourseRequest $request, Course $course, UpdateCourseAction $updateCourseAction, TrixService $trixService)
+    public function update(StoreCourseRequest $request, Course $course)
     {
-        $requestData = $trixService->transformTrixDataFromRequest($request->validated(), 'course');
+        $requestData = $this->trixService->transformTrixDataFromRequest($request->validated(), 'course');
         $data = new CourseData($requestData);
 
-        $updateCourseAction->execute($course, $data);
+        $this->updateCourseAction->execute($course, $data);
 
         return redirect(route('courses.index'));
     }
 
-    public function store(StoreCourseRequest $request, CreateCourseAction $createCourseAction, TrixService $trixService)
+    public function store(StoreCourseRequest $request)
     {
-        $requestData = $trixService->transformTrixDataFromRequest($request->validated(), 'course');
+        $requestData = $this->trixService->transformTrixDataFromRequest($request->validated(), 'course');
         $data = new CourseData($requestData);
 
-        $course = $createCourseAction->execute($data);
+        $course = $this->createCourseAction->execute($data);
 
         return redirect(route('courses.edit', $course));
     }
 
-    public function publish(PublishCourseRequest $request, Course $course, PublishCourseAction $publishCourseAction)
+    public function publish(PublishCourseRequest $request, Course $course)
     {
-        $publishCourseAction->execute($course);
+        $this->publishCourseAction->execute($course);
 
         return redirect(route('courses.index'));
     }
 
-    public function delete(DeleteCourseRequest $request, Course $course, DeleteCourseAction $deleteCourseAction)
+    public function delete(DeleteCourseRequest $request, Course $course)
     {
-        $deleteCourseAction->execute($course);
+        $this->deleteCourseAction->execute($course);
 
         return redirect(route('courses.index'));
     }

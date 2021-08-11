@@ -2,7 +2,6 @@
 
 namespace Domain\Courses\Actions;
 
-use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
 
 class DeleteCourseAction
@@ -24,6 +23,8 @@ class DeleteCourseAction
      */
     public function execute(Course $course): void
     {
+        $course->assignments()->delete();
+        // @todo delete related trix content
         $course->delete();
     }
 }

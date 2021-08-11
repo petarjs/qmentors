@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Courses\Components\CourseIndex;
 use App\Courses\Livewire\Index;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +25,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Livewire::component('course-index', CourseIndex::class);
     }
 }

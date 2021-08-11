@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Services;
+namespace Support\Trix\Services;
 
 class TrixService
 {

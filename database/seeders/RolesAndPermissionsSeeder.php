@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'assign roles']);
         Permission::create(['name' => 'assign permissions']);
@@ -34,6 +35,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'edit courses']);
         Permission::create(['name' => 'delete courses']);
         Permission::create(['name' => 'publish courses']);
+        Permission::create(['name' => 'create assignments']);
+        Permission::create(['name' => 'edit assignments']);
+        Permission::create(['name' => 'delete assignments']);
 
         Permission::create(['name' => 'review solutions']);
         Permission::create(['name' => 'add notes to solutions']);
@@ -59,6 +63,9 @@ class RolesAndPermissionsSeeder extends Seeder
                 'edit courses',
                 'delete courses',
                 'publish courses',
+                'create assignments',
+                'edit assignments',
+                'delete assignments',
                 'assign courses to mentors',
                 'remove mentors from courses',
                 'assign mentees to mentors',

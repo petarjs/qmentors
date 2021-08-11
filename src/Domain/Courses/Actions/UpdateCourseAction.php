@@ -4,7 +4,7 @@ namespace Domain\Courses\Actions;
 
 use Domain\Courses\DataTransferObjects\CourseData;
 use Domain\Courses\Models\Course;
-use Support\Services\TrixService;
+use Support\Trix\Services\TrixService;
 
 class UpdateCourseAction
 {

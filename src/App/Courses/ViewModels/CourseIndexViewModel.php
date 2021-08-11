@@ -3,7 +3,6 @@
 namespace App\Courses\ViewModels;
 
 use App\Courses\Queries\CourseIndexQuery;
-use Domain\Courses\Models\Course;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\ViewModels\ViewModel;
 

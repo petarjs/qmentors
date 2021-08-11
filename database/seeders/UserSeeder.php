@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use Domain\Users\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
 
         $mentor = User::create([
             'name' => 'Mentor',
-            'email' => 'petar+mentor@quantox.com',
+            'email' => "petar+mentor@quantox.com",
             'password' => bcrypt('123123123'),
         ]);
 
