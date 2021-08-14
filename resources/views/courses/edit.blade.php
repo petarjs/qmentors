@@ -17,16 +17,25 @@
                         <!-- Primary column -->
                         <section aria-labelledby="primary-heading"
                                  class="min-w-0 flex-1 h-full flex flex-col overflow-hidden lg:order-last">
-                            @if($isEditing)
-                                <div class="px-4 py-6 flex items-center justify-between">
-                                    <div class="flex space-x-3">
-                                        <h1 class="font-semibold text-xl">Edit Course</h1>
 
+                            <div class="px-4 py-6 flex items-center justify-between">
+                                <div class="flex space-x-3">
+                                    <h1 class="font-semibold text-xl">
+                                        @if($isEditing)
+                                            Edit Course
+                                        @else
+                                            Create Course
+                                        @endif
+                                    </h1>
+
+                                    @if($isEditing)
                                         <x-badge :color="$course->state->color()">
                                             {{$course->state}}
                                         </x-badge>
-                                    </div>
+                                    @endif
+                                </div>
 
+                                @if($isEditing)
                                     <div class="flex space-x-3">
                                         @can('delete courses')
                                             <form method="POST" action="{{route('courses.delete', $course)}}">
@@ -46,32 +55,31 @@
                                             </form>
                                         @endif
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
+
 
                             <form method="POST"
                                   action="{{$isEditing ? route('courses.update', $course) : route('courses.store')}}">
                                 @csrf
+
+                                @if($errors->any())
+                                    <div class="px-4 mb-6">
+                                        <x-form-errors :errors="$errors"/>
+                                    </div>
+                                @endif
 
                                 <div class="flex flex-col px-4 mb-6">
                                     <x-input name="name" label="Name" placeholder="Course name" :value="$course->name"
                                              wrapperClass="mb-4"/>
 
                                     <x-select name="category" label="Category" :value="$course->category"
-                                              wrapperClass="mb-4">
-                                        @foreach($categories as $category)
-                                            <option @if($category == $course->category) selected
-                                                    @endif value="{{$category}}">{{$category}}</option>
-                                        @endforeach
-                                    </x-select>
+                                              :options="$categories"
+                                              wrapperClass="mb-4"/>
 
                                     <x-select name="difficulty" label="Difficulty" :value="$course->difficulty"
-                                              wrapperClass="mb-4">
-                                        @foreach($difficulties as $difficulty)
-                                            <option @if($difficulty == $course->difficulty) selected
-                                                    @endif value="{{$difficulty}}">{{$difficulty}}</option>
-                                        @endforeach
-                                    </x-select>
+                                              :options="$difficulties"
+                                              wrapperClass="mb-4"/>
 
                                     @trix($course, 'content')
 
@@ -105,7 +113,7 @@
                                     </div>
                                 </li>
 
-                                @forelse($course->assignments as $assignment)
+                                @forelse($assignments as $assignment)
                                     <li class="relative py-2 px-4 bg-gray-50">
                                         <a href="{{route('assignments.edit', compact('course', 'assignment'))}}"
                                            class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">

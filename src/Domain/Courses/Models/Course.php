@@ -5,7 +5,9 @@ namespace Domain\Courses\Models;
 use Domain\Assignments\Models\Assignment;
 use Domain\Courses\Enums\CategoryEnum;
 use Domain\Courses\Enums\DifficultyEnum;
+use Domain\Courses\QueryBuilders\CourseQueryBuilder;
 use Domain\Courses\States\CourseState;
+use Domain\Mentors\Models\Mentor;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
@@ -44,8 +46,19 @@ class Course extends Model
         return LogOptions::defaults()->logAll();
     }
 
+    public function newEloquentBuilder($query): CourseQueryBuilder
+    {
+        return new CourseQueryBuilder($query);
+    }
+
     public function assignments()
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Assignment::class)->ordered();
+    }
+
+    public function mentors()
+    {
+        return $this
+            ->belongsToMany(Mentor::class, 'teaches', 'course_id', 'mentor_id');
     }
 }

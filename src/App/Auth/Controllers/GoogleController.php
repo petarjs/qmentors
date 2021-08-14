@@ -11,6 +11,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController
 {
+    private FindUserInvitationAction $findUserInvitationAction;
+    private AcceptInvitationAction $acceptInvitationAction;
+
+    public function __construct(
+        FindUserInvitationAction $findUserInvitationAction,
+        AcceptInvitationAction   $acceptInvitationAction
+    )
+    {
+        $this->findUserInvitationAction = $findUserInvitationAction;
+        $this->acceptInvitationAction = $acceptInvitationAction;
+    }
+
     public function redirectToGoogle()
     {
         try {
@@ -45,10 +57,10 @@ class GoogleController
                     'password' => encrypt('123456dummy')
                 ]);
 
-                $invitation = FindUserInvitationAction::execute($newUser);
+                $invitation = $this->findUserInvitationAction->execute($newUser);
 
                 if ($invitation) {
-                    AcceptInvitationAction::execute($invitation, $newUser);
+                    $this->acceptInvitationAction->execute($invitation, $newUser);
                 } else {
                     $newUser->assignRole('mentee');
                 }

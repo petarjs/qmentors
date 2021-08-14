@@ -71,6 +71,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
      */
     Route::get('mentors', [MentorController::class, 'index'])
         ->name('mentors.index');
+    Route::get('mentors/{mentor}', [MentorController::class, 'edit'])
+        ->name('mentors.edit');
+    Route::put('mentors/{mentor}', [MentorController::class, 'update'])
+        ->name('mentors.update');
+    Route::delete('mentors/{mentor}', [MentorController::class, 'delete'])
+        ->name('mentors.delete');
+    Route::post('mentors/{mentor}/courses', [MentorController::class, 'assignCourse'])
+        ->name('mentors.assign-course');
 
     /**
      * Invitations
@@ -79,4 +87,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ->name('invitations.create');
     Route::post('invitations/new', [InvitationController::class, 'store'])
         ->name('invitations.store');
+
 });

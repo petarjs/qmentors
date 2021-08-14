@@ -2,7 +2,11 @@
 
 namespace Domain\Mentors\Actions;
 
-class InviteMentorAction
+use Domain\Courses\Models\Course;
+use Domain\Mentors\DataTransferObjects\AssignCourseData;
+use Domain\Mentors\Models\Mentor;
+
+class AssignCourseToMentorAction
 {
 
     /**
@@ -20,8 +24,9 @@ class InviteMentorAction
      *
      * @return mixed
      */
-    public function execute()
+    public function execute(Mentor $mentor, AssignCourseData $data)
     {
-
+        $course = Course::findOrFail($data->course_id);
+        $mentor->courses()->attach($course);
     }
 }

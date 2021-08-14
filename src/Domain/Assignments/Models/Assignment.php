@@ -2,6 +2,7 @@
 
 namespace Domain\Assignments\Models;
 
+use Domain\Assignments\QueryBuilders\AssignmentQueryBuilder;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
@@ -32,6 +33,11 @@ class Assignment extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logAll();
+    }
+
+    public function newEloquentBuilder($query): AssignmentQueryBuilder
+    {
+        return new AssignmentQueryBuilder($query);
     }
 
     public function course()

@@ -62,7 +62,7 @@ class CourseController
 
         $this->updateCourseAction->execute($course, $data);
 
-        return redirect(route('courses.edit', $course));
+        return redirect(route('courses.edit', $course))->with('flash.banner', "Course updated!");
     }
 
     public function store(StoreCourseRequest $request)
@@ -72,20 +72,20 @@ class CourseController
 
         $course = $this->createCourseAction->execute($data);
 
-        return redirect(route('courses.edit', $course));
+        return redirect(route('courses.edit', $course))->with('flash.banner', "Course created!");
     }
 
     public function publish(PublishCourseRequest $request, Course $course)
     {
         $this->publishCourseAction->execute($course);
 
-        return redirect(route('courses.index'));
+        return redirect(route('courses.index'))->with('flash.banner', "Course published!");
     }
 
     public function delete(DeleteCourseRequest $request, Course $course)
     {
         $this->deleteCourseAction->execute($course);
 
-        return redirect(route('courses.index'));
+        return redirect(route('courses.index'))->with('flash.banner', "Course deleted!");
     }
 }

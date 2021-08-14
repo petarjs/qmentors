@@ -5,10 +5,6 @@
         </h2>
     </x-slot>
 
-    @if($errors->any())
-        @dd($errors)
-    @endif
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -21,12 +17,17 @@
                                 <div class="flex space-x-3">
                                     <h1 class="font-semibold text-xl">Invite user</h1>
                                 </div>
-
                             </div>
 
                             <form method="POST"
                                   action="{{route('invitations.store')}}">
                                 @csrf
+
+                                @if($errors->any())
+                                    <div class="px-4 mb-6">
+                                        <x-form-errors :errors="$errors"/>
+                                    </div>
+                                @endif
 
                                 <div class="flex flex-col px-4 mb-6">
                                     <x-input type="email" name="email" label="Email" placeholder="User email"
@@ -35,11 +36,10 @@
 
                                     @empty($selectedRole)
                                         <x-select name="role_id" label="Role" :value="$invitation->role_id"
-                                                  wrapperClass="mb-4">
-                                            @foreach($roles as $role)
-                                                <option @if($role->id == $invitation->role_id) selected
-                                                        @endif value="{{$role->id}}">{{$role->name}}</option>
-                                            @endforeach
+                                                  wrapperClass="mb-4"
+                                                  :options="$roles"
+                                                  optionKey="id"
+                                                  optionLabel="name">
                                         </x-select>
                                     @else
                                         <input type="hidden" name="role_id" value="{{$selectedRole->id}}"/>

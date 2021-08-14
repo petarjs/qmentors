@@ -47,9 +47,10 @@ class AssignmentController
         $requestData = $this->trixService->transformTrixDataFromRequest($request->validated(), 'assignment');
         $data = new AssignmentData($requestData);
 
-        $this->updateAssignmentAction->execute($assignment, $data);
+        $assignment = $this->updateAssignmentAction->execute($assignment, $data);
 
-        return redirect(route('courses.edit', $course));
+        return redirect(route('assignments.edit', [$course, $assignment]))
+            ->with('flash.banner', "Assignment updated!");
     }
 
     public function store(StoreAssignmentRequest $request, Course $course)
@@ -57,15 +58,17 @@ class AssignmentController
         $requestData = $this->trixService->transformTrixDataFromRequest($request->validated(), 'assignment');
         $data = new AssignmentData($requestData);
 
-        $this->createAssignmentAction->execute($course, $data);
+        $assignment = $this->createAssignmentAction->execute($course, $data);
 
-        return redirect(route('courses.edit', $course));
+        return redirect(route('assignments.edit', [$course, $assignment]))
+            ->with('flash.banner', "Assignment created!");
     }
 
     public function delete(Course $course, Assignment $assignment)
     {
         $this->deleteAssignmentAction->execute($assignment);
 
-        return redirect(route('courses.edit', $course));
+        return redirect(route('courses.edit', $course))
+            ->with('flash.banner', "Assignment deleted!");
     }
 }

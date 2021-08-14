@@ -2,24 +2,19 @@
 
 namespace Domain\Mentors\Models;
 
+use Domain\Courses\Models\Course;
 use Domain\Users\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 class Mentor extends User
 {
-    use HasSlug, SoftDeletes;
+    use  SoftDeletes;
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
+    protected $table = 'users';
 
-    public function getRouteKeyName()
+    public function courses()
     {
-        return 'slug';
+        return $this
+            ->belongsToMany(Course::class, 'teaches', 'mentor_id', 'course_id');
     }
 }

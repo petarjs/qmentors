@@ -11,8 +11,7 @@ class InvitationQueryBuilder extends Builder
     public function forUser(User $user): self
     {
         return $this
-            ->whereState('status', Pending::class)
-            ->whereEmail($user->email)
-            ->first();
+            ->whereState('state', Pending::class)
+            ->whereEmail($user->email);
     }
 }

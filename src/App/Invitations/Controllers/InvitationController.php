@@ -2,10 +2,12 @@
 
 namespace App\Invitations\Controllers;
 
+use App\Invitations\Notifications\UserInvitationCreated;
 use App\Invitations\Requests\InviteUserRequest;
 use App\Invitations\ViewModels\InvitationViewModel;
 use Domain\Invitations\Actions\InviteUserAction;
 use Domain\Invitations\DataTransferObjects\InvitationData;
+use Illuminate\Support\Facades\Notification;
 
 class InvitationController
 {
@@ -25,7 +27,8 @@ class InvitationController
     {
         $data = new InvitationData($request->validated());
         $this->inviteUserAction->execute($data);
+        Notification::route('mail', $data->email)->notify(new UserInvitationCreated());
 
-        return redirect('dashboard');
+        return redirect('dashboard')->with('flash.banner', "Invitation sent to $data->email!");
     }
 }

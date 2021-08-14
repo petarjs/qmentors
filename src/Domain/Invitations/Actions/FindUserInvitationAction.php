@@ -8,14 +8,17 @@ use Domain\Users\Models\User;
 
 class FindUserInvitationAction
 {
+    private CheckIfInvitationExpiredAction $checkIfInvitationExpiredAction;
+
     /**
      * Create a new action instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CheckIfInvitationExpiredAction $checkIfInvitationExpiredAction)
     {
         // Prepare the action for execution, leveraging constructor injection.
+        $this->checkIfInvitationExpiredAction = $checkIfInvitationExpiredAction;
     }
 
     /**
@@ -25,13 +28,13 @@ class FindUserInvitationAction
      */
     public function execute(User $user): ?Invitation
     {
-        $invitation = Invitation::forUser($user)->get();
+        $invitation = Invitation::forUser($user)->first();
 
         if (!$invitation) {
             return null;
         }
-        
-        $invitationExpired = CheckIfInvitationExpiredAction::execute($invitation);
+
+        $invitationExpired = $this->checkIfInvitationExpiredAction->execute($invitation);
 
         if ($invitationExpired) {
             $invitation->state->transitionTo(Expired::class);

@@ -17,12 +17,19 @@
                         <!-- Primary column -->
                         <section aria-labelledby="primary-heading"
                                  class="min-w-0 flex-1 h-full flex flex-col overflow-hidden lg:order-last">
-                            @if($isEditing)
-                                <div class="px-4 py-6 flex items-center justify-between">
-                                    <div class="flex space-x-3">
-                                        <h1 class="font-semibold text-xl">Edit Assignment</h1>
-                                    </div>
 
+                            <div class="px-4 py-6 flex items-center justify-between">
+                                <div class="flex space-x-3">
+                                    <h1 class="font-semibold text-xl">
+                                        @if($isEditing)
+                                            Edit Assignment
+                                        @else
+                                            Create Assignment
+                                        @endif
+                                    </h1>
+                                </div>
+
+                                @if($isEditing)
                                     <div class="flex space-x-3">
                                         @can('delete assignments')
                                             <form method="POST"
@@ -34,8 +41,9 @@
                                             </form>
                                         @endcan
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
+
                             <form method="POST"
                                   action="{{$isEditing ? route('assignments.update', compact('course', 'assignment')) : route('assignments.store', $course)}}">
                                 @csrf
@@ -61,7 +69,6 @@
                     </main>
 
                     <!-- Secondary column (hidden on smaller screens) -->
-                    <!-- Secondary column (hidden on smaller screens) -->
                     @if($isEditing)
                         <aside class="hidden w-96 bg-white border-l border-gray-200 overflow-y-auto lg:block">
                             <ul class="divide-y divide-gray-200 border-b border-gray-200">
@@ -80,7 +87,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                @forelse($course->assignments as $assignment)
+                                @forelse($assignments as $assignment)
                                     <li class="relative py-2 px-4
 @if(request()->url() === route('assignments.edit', compact('course', 'assignment')))
                                         bg-green-100 text-green-600 hover:text-green-800

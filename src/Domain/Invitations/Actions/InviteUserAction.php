@@ -28,7 +28,5 @@ class InviteUserAction
         $invitation->email = $data->email;
         $invitation->role_id = $data->role_id;
         $invitation->save();
-
-        // @todo send notification email to the invited user
     }
 }
