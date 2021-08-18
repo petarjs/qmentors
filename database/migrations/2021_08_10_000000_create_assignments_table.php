@@ -21,8 +21,7 @@ class CreateAssignmentsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->uuid('course_id')->index();
-//            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreignUuid('course_id');
         });
     }
 

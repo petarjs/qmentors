@@ -4,6 +4,8 @@ use App\Assignments\Controllers\AssignmentController;
 use App\Auth\Controllers\GoogleController;
 use App\Courses\Controllers\CourseController;
 use App\Invitations\Controllers\InvitationController;
+use App\Mentors\Controllers\ManageMentorController;
+use App\Mentors\Controllers\ManageMentorsController;
 use App\Mentors\Controllers\MentorController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,18 +69,20 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ->name('assignments.delete');
 
     /**
-     * Mentors
+     * Manage Mentors
      */
-    Route::get('mentors', [MentorController::class, 'index'])
+    Route::get('mentors', [ManageMentorsController::class, 'index'])
         ->name('mentors.index');
-    Route::get('mentors/{mentor}', [MentorController::class, 'edit'])
+    Route::get('mentors/{mentor}', [ManageMentorsController::class, 'edit'])
         ->name('mentors.edit');
-    Route::put('mentors/{mentor}', [MentorController::class, 'update'])
+    Route::put('mentors/{mentor}', [ManageMentorsController::class, 'update'])
         ->name('mentors.update');
-    Route::delete('mentors/{mentor}', [MentorController::class, 'delete'])
+    Route::delete('mentors/{mentor}', [ManageMentorsController::class, 'delete'])
         ->name('mentors.delete');
-    Route::post('mentors/{mentor}/courses', [MentorController::class, 'assignCourse'])
+    Route::post('mentors/{mentor}/courses', [ManageMentorsController::class, 'assignCourse'])
         ->name('mentors.assign-course');
+    Route::post('mentors/{mentor}/mentees', [ManageMentorsController::class, 'assignMentee'])
+        ->name('mentors.assign-mentee');
 
     /**
      * Invitations
@@ -88,4 +92,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('invitations/new', [InvitationController::class, 'store'])
         ->name('invitations.store');
 
+    /**
+     * Mentors
+     */
+    Route::get('mentor/courses', [MentorController::class, 'myCourses'])
+        ->name('mentors.courses.index');
 });

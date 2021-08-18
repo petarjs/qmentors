@@ -14,8 +14,8 @@ class CreateTeachesTable extends Migration
     public function up()
     {
         Schema::create('teaches', function (Blueprint $table) {
-            $table->uuid('course_id');
-            $table->uuid('mentor_id');
+            $table->foreignUuid('course_id');
+            $table->foreignUuid('mentor_id');
             $table->timestamps();
             $table->unique(['course_id', 'mentor_id']);
         });

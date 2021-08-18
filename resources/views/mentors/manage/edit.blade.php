@@ -90,7 +90,7 @@
                                             <x-select name="course_id" label="Assign Course"
                                                       value=""
                                                       placeholder="Choose a course"
-                                                      :options="$courses"
+                                                      :options="$availableCourses"
                                                       wrapperClass="mb-4"/>
 
                                             <div class="text-right mt-6">
@@ -102,23 +102,25 @@
                                     </form>
                                 @endcan
 
-                                <div class="bg-white shadow overflow-hidden sm:rounded-md">
-                                    <div class="px-4 py-6 flex items-center justify-between">
-                                        <div class="flex space-x-3">
-                                            <h2 class="font-semibold text-xl">
-                                                Assigned Courses
-                                            </h2>
+                                @if($assignedCourses->isNotEmpty())
+                                    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                                        <div class="px-4 py-6 flex items-center justify-between">
+                                            <div class="flex space-x-3">
+                                                <h2 class="font-semibold text-xl">
+                                                    Assigned Courses
+                                                </h2>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <ul class="divide-y divide-gray-200">
-                                        @foreach($assignedCourses as $course)
-                                            <li>
-                                                <x-courses.list-item :course="$course"/>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                        <ul class="divide-y divide-gray-200">
+                                            @foreach($assignedCourses as $course)
+                                                <li>
+                                                    <x-courses.list-item :course="$course"/>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </section>
                         </section>
                     </main>
@@ -136,6 +138,56 @@
                                     </h1>
                                 </div>
                             </div>
+
+                            <section class="min-w-0 flex-1 flex flex-col overflow-hidden">
+                                @can('assign mentees to mentors')
+                                    <form method="POST"
+                                          action="{{ route('mentors.assign-mentee', compact('mentor')) }}">
+                                        @csrf
+                                        @method('POST')
+
+                                        @if($errors->assignMentee->any())
+                                            <div class="px-4 mb-6">
+                                                <x-form-errors :errors="$errors->assignMentee"/>
+                                            </div>
+                                        @endif
+
+                                        <div class="flex flex-col px-4 mb-6">
+                                            <x-select name="mentee_id" label="Assign Mentee"
+                                                      value=""
+                                                      placeholder="Choose a mentee"
+                                                      :options="$availableMentees"
+                                                      wrapperClass="mb-4"/>
+
+                                            <div class="text-right mt-6">
+                                                <x-button icon="check">
+                                                    Add mentee
+                                                </x-button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endcan
+
+                                @if($assignedMentees->isNotEmpty())
+                                    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                                        <div class="px-4 py-6 flex items-center justify-between">
+                                            <div class="flex space-x-3">
+                                                <h2 class="font-semibold text-xl">
+                                                    Assigned Mentees
+                                                </h2>
+                                            </div>
+                                        </div>
+
+                                        <ul class="divide-y divide-gray-200">
+                                            @foreach($assignedMentees as $mentee)
+                                                <li>
+                                                    {{$mentee->name}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </section>
                         </section>
                     </section>
                 </div>

@@ -5,7 +5,9 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Mentors') }}
             </h2>
-            <x-button as="a" href="{{route('invitations.create', 'mentor')}}">Invite</x-button>
+            @can('invite mentors')
+                <x-button as="a" href="{{route('invitations.create', 'mentor')}}">Invite</x-button>
+            @endcan
         </div>
     </x-slot>
 

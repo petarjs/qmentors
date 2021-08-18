@@ -2,7 +2,7 @@
 
 namespace App\Mentors\Queries;
 
-use Domain\Users\Models\User;
+use Domain\Mentors\Models\Mentor;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -10,7 +10,7 @@ class MentorIndexQuery extends QueryBuilder
 {
     public function __construct(Request $request)
     {
-        $query = User::role('mentor');
+        $query = Mentor::query();
 
         parent::__construct($query, $request);
 

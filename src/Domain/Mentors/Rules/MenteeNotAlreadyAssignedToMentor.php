@@ -5,7 +5,7 @@ namespace Domain\Mentors\Rules;
 use Domain\Mentors\Models\Mentor;
 use Illuminate\Contracts\Validation\Rule;
 
-class CourseNotAlreadyAssignedToMentor implements Rule
+class MenteeNotAlreadyAssignedToMentor implements Rule
 {
     private Mentor $mentor;
 
@@ -16,11 +16,11 @@ class CourseNotAlreadyAssignedToMentor implements Rule
 
     public function passes($attribute, $value)
     {
-        return empty($this->mentor->courses()->find($value));
+        return empty($this->mentor->mentees()->find($value));
     }
 
     public function message()
     {
-        return 'The course is already assigned to this mentor.';
+        return 'This mentee is already assigned to this mentor.';
     }
 }
